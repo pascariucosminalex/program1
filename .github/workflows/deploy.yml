@@ -1,13 +1,13 @@
-# .github/workflows/test.yml
-name: Run Tests on test branch
+
+name: Build & Deploy on dev branch
 
 on:
   push:
     branches:
-      - test
+      - dev
 
 jobs:
-  run-tests:
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -21,5 +21,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests
-        run: npm test
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy
+        run: echo "Deploying application..."  # Înlocuiești cu ceva real mai târziu
