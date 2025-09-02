@@ -1,17 +1,10 @@
-
-name: Build & Deploy on dev branch
-
-on:
-  push:
-    branches:
-      - dev
-
 jobs:
-  build-and-deploy:
+  test:
+    if: github.ref == 'refs/heads/test'
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
 
       - name: Install NodeJS
         uses: actions/setup-node@v3
@@ -21,8 +14,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build project
-        run: npm run build
+      - name: Run tests
+        run: npm test
 
-      - name: Deploy
-        run: echo "Deploying application..."  # Înlocuiești cu ceva real mai târziu
+  deploy:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5.0.0
+
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
